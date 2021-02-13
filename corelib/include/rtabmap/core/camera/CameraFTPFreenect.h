@@ -27,15 +27,51 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include <rtabmap/core/camera/CameraFreenect.h>
-#include <rtabmap/core/camera/CameraFTPFreenect.h>
-#include <rtabmap/core/camera/CameraFreenect2.h>
-#include <rtabmap/core/camera/CameraK4W2.h>
-#include <rtabmap/core/camera/CameraOpenni.h>
-#include <rtabmap/core/camera/CameraOpenNI2.h>
-#include <rtabmap/core/camera/CameraOpenNICV.h>
-#include <rtabmap/core/camera/CameraRealSense.h>
-#include <rtabmap/core/camera/CameraRealSense2.h>
-#include <rtabmap/core/camera/CameraRGBDImages.h>
-#include <rtabmap/core/camera/CameraK4A.h>
+#include "rtabmap/core/RtabmapExp.h" // DLL export/import defines
 
+#include "rtabmap/core/StereoCameraModel.h"
+#include "rtabmap/core/Camera.h"
+#include "rtabmap/core/Version.h"
+
+typedef struct _freenect_context freenect_context;
+typedef struct _freenect_device freenect_device;
+
+namespace rtabmap
+{
+
+class FreenectFTPDevice;
+
+class RTABMAP_EXP CameraFTPFreenect :
+	public Camera
+{
+public:
+	static bool available();
+	enum Type {kTypeColorDepth, kTypeIRDepth};
+
+public:
+	// default local transform z in, x right, y down));
+	CameraFTPFreenect(int deviceId= 0,
+					Type type = kTypeColorDepth,
+					float imageRate=0.0f,
+					const Transform & localTransform = CameraModel::opticalRotation());
+	virtual ~CameraFTPFreenect();
+
+	virtual bool init(const std::string & calibrationFolder = ".", const std::string & cameraName = "");
+	virtual bool isCalibrated() const;
+	virtual std::string getSerial() const;
+
+protected:
+	virtual SensorData captureImage(CameraInfo * info = 0);
+
+private:
+#ifdef RTABMAP_FREENECT
+	int deviceId_;
+	Type type_;
+	freenect_context * ctx_;
+	FreenectFTPDevice * FreenectFTPDevice_;
+	StereoCameraModel stereoModel_;
+#endif
+};
+
+
+} // namespace rtabmap

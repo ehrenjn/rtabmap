@@ -50,7 +50,7 @@ void showUsage()
 {
 	printf("\nUsage:\n"
 			"rtabmap-rgbd_mapping driver\n"
-			"  driver       Driver number to use: 0=OpenNI-PCL, 1=OpenNI2, 2=Freenect, 3=OpenNI-CV, 4=OpenNI-CV-ASUS, 5=Freenect2, 6=ZED SDK, 7=RealSense, 8=RealSense2 9=Kinect for Azure SDK 10=MYNT EYE S\n\n");
+			"  driver       Driver number to use: 0=OpenNI-PCL, 1=OpenNI2, 2=Freenect, 3=OpenNI-CV, 4=OpenNI-CV-ASUS, 5=Freenect2, 6=ZED SDK, 7=RealSense, 8=RealSense2 9=Kinect for Azure SDK 10=MYNT EYE S 11=TEST direct 12=test freenect mod\n\n");
 	exit(1);
 }
 
@@ -72,9 +72,9 @@ int main(int argc, char * argv[])
 	else
 	{
 		driver = atoi(argv[argc-1]);
-		if(driver < 0 || driver > 10)
+		if(driver < 0 || driver > 12)
 		{
-			UERROR("driver should be between 0 and 10.");
+			UERROR("driver should be between 0 and 12.");
 			showUsage();
 		}
 	}
@@ -174,6 +174,28 @@ int main(int argc, char * argv[])
 			exit(-1);
 		}
 		camera = new rtabmap::CameraMyntEye();
+	}
+	else if (driver == 11){
+		std::string addr1 = "../RGB1";
+		std::string addr2 = "../D1";
+		/*std::cout << "col addr: ";
+  		std::getline (std::cin,addr1);
+  		std::cout << "depth addr: ";
+  		std::getline (std::cin,addr2);*/
+		camera = new CameraRGBDImages(
+			addr1,
+			addr2,
+			1280.0f / 1050.0f,
+			30.0f);
+	}
+	else if(driver == 12)
+	{
+		if(!CameraFTPFreenect::available())
+		{
+			UERROR("Not built with Freenect support...");
+			exit(-1);
+		}
+		camera = new CameraFTPFreenect();
 	}
 	else
 	{

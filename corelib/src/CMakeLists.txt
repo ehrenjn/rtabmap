@@ -18,6 +18,7 @@ SET(SRC_FILES
     CameraModel.cpp
     
     camera/CameraFreenect.cpp
+    camera/CameraFTPFreenect.cpp
     camera/CameraFreenect2.cpp
     camera/CameraImages.cpp
     camera/CameraK4W2.cpp

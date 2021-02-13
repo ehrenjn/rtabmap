@@ -2,6 +2,7 @@
 # For GNUInstallDirs
 cmake_minimum_required(VERSION 2.8.5)
 PROJECT( RTABMap )
+set (CMAKE_CXX_STANDARD 11)
 SET(PROJECT_PREFIX rtabmap)
 
 # Catkin doesn't support multiarch library path, 
