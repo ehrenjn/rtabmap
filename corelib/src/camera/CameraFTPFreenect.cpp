@@ -180,6 +180,7 @@ std::string CameraFTPFreenect::getSerial() const
 
 SensorData CameraFTPFreenect::captureImage(CameraInfo * info)
 {
+	
 	printf(">>captureImage");
 	SensorData data;
 	if( FreenectFTPDevice_) //ctx_ &&
@@ -190,8 +191,8 @@ SensorData CameraFTPFreenect::captureImage(CameraInfo * info)
 			if(TEST){
 				iii += 1;
 				usleep(50000);
-				rgb = cv::imread(("/home/monchy/Documents/testProj/RGB1/" + std::to_string(iii % MAX) + ".png").c_str(), cv::IMREAD_COLOR).clone();
-				depth = cv::imread( ("/home/monchy/Documents/testProj/D1/" + std::to_string(iii % MAX) + ".png").c_str(), cv::IMREAD_UNCHANGED).clone();
+				rgb = cv::imread(("/root/rgbd_mapping/RGBDMapping/depth_data/" + std::to_string(iii % MAX) + ".png").c_str(), cv::IMREAD_COLOR).clone();
+				depth = cv::imread( ("/root/rgbd_mapping/RGBDMapping/rgb_data/" + std::to_string(iii % MAX) + ".png").c_str(), cv::IMREAD_UNCHANGED).clone();
 				for ( int ww = 0; ww < 320; ww++){
 					for (int hh = 0; hh < 240; hh++){
 						depth.at<ushort>(hh,ww) = depth.at<ushort>(hh,ww) >> 3;
