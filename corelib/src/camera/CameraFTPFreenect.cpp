@@ -181,14 +181,17 @@ std::string CameraFTPFreenect::getSerial() const
 SensorData CameraFTPFreenect::captureImage(CameraInfo * info)
 {
 	
-	printf(">>captureImage");
+	printf(">>captureImage\n");
 	SensorData data;
 	if( FreenectFTPDevice_) //ctx_ &&
 	{
+		printf("freenectftpdevice\n");
 		if(FreenectFTPDevice_->isRunning())
 		{
+			printf("running\n");
 			cv::Mat depth,rgb;
 			if(TEST){
+				printf("test\n");
 				iii += 1;
 				usleep(50000);
 				rgb = cv::imread(("/root/rgbd_mapping/RGBDMapping/rgb_data/" + std::to_string(iii % MAX) + ".png").c_str(), cv::IMREAD_COLOR).clone();
