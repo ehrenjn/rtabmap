@@ -65,11 +65,11 @@ class FreenectFTPDevice : public UThread {
 
 	bool init()
 	{
-		rgbIrBuffer_ = cv::Mat(cv::Size(640,480), color_?CV_8UC3:CV_8UC1);
-		depthBuffer_ = cv::Mat(cv::Size(640,480), CV_16UC1);
+		rgbIrBuffer_ = cv::Mat(cv::Size(320,240), color_?CV_8UC3:CV_8UC1);
+		depthBuffer_ = cv::Mat(cv::Size(320,240), CV_16UC1);
 		float rgb_focal_length_sxga = 1050.0f;
 		float width_sxga = 1280.0f;
-		float width = 640.0f;
+		float width = 320.0f;
 		float scale = width / width_sxga;
 		depthFocal_ =  rgb_focal_length_sxga * scale;
 
@@ -198,8 +198,8 @@ SensorData CameraFTPFreenect::captureImage(CameraInfo * info)
 				rgb = cv::imread(("/root/rgbd_mapping/RGBDMapping/rgb_data/" + std::to_string(iii % MAX) + ".png").c_str(), cv::IMREAD_COLOR).clone();
 				depth = cv::imread( ("/root/rgbd_mapping/RGBDMapping/depth_data/" + std::to_string(iii % MAX) + ".png").c_str(), cv::IMREAD_UNCHANGED).clone();
 				printf("W:%d,H:%d,D:%d\n",depth.rows,depth.cols,depth.depth());
-				for ( int ww = 0; ww < 640; ww++){
-					for (int hh = 0; hh < 480; hh++){
+				for ( int ww = 0; ww < 320; ww++){
+					for (int hh = 0; hh < 240; hh++){
 						depth.at<ushort>(hh,ww) = depth.at<ushort>(hh,ww) >> 3;
 					}
 				}
