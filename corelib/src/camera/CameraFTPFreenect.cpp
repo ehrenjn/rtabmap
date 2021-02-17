@@ -183,10 +183,10 @@ SensorData CameraFTPFreenect::captureImage(CameraInfo * info)
 	
 	printf(">>captureImage\n");
 	SensorData data;
-	if( FreenectFTPDevice_) //ctx_ &&
+	if( true) //FreenectFTPDevice_) //ctx_ &&
 	{
 		printf("freenectftpdevice\n");
-		if(FreenectFTPDevice_->isRunning())
+		if(true) //FreenectFTPDevice_->isRunning())
 		{
 			printf("running\n");
 			cv::Mat depth,rgb;
