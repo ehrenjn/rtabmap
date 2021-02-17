@@ -183,6 +183,7 @@ SensorData CameraFTPFreenect::captureImage(CameraInfo * info)
 	
 	printf(">>captureImage\n");
 	SensorData data;
+	printf("made null sensor\n");
 	if( true) //FreenectFTPDevice_) //ctx_ &&
 	{
 		printf("freenectftpdevice\n");
