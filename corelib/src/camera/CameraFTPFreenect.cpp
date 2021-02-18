@@ -160,11 +160,12 @@ CameraFTPFreenect::~CameraFTPFreenect()
 
 bool CameraFTPFreenect::init(const std::string & calibrationFolder, const std::string & cameraName)
 {
-	printf(">>init2");
+	printf(">>init2\n");
 	bool hardwareRegistration = true;
 	FreenectFTPDevice_ = new FreenectFTPDevice(ctx_, deviceId_, type_==kTypeColorDepth, hardwareRegistration);
 	FreenectFTPDevice_->init();
 	FreenectFTPDevice_->start();
+	printf(">>init2.1\n");
 	return true;
 }
 
