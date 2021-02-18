@@ -180,24 +180,20 @@ std::string CameraFTPFreenect::getSerial() const
 
 SensorData CameraFTPFreenect::captureImage(CameraInfo * info)
 {
-	
 	printf(">>captureImage\n");
 	SensorData data;
-	printf("made null sensor\n");
-	if( true) //FreenectFTPDevice_) //ctx_ &&
+	if( FreenectFTPDevice_) //ctx_ &&
 	{
-		printf("freenectftpdevice\n");
-		if(true) //FreenectFTPDevice_->isRunning())
+		printf(">>2\n");
+		if(FreenectFTPDevice_->isRunning())
 		{
-			printf("running\n");
+			printf(">>3\n");
 			cv::Mat depth,rgb;
 			if(TEST){
-				printf("test\n");
 				iii += 1;
-				usleep(50000);
-				rgb = cv::imread(("/root/rgbd_mapping/RGBDMapping/rgb_data/" + std::to_string(iii % MAX) + ".png").c_str(), cv::IMREAD_COLOR).clone();
-				depth = cv::imread( ("/root/rgbd_mapping/RGBDMapping/depth_data/" + std::to_string(iii % MAX) + ".png").c_str(), cv::IMREAD_UNCHANGED).clone();
-				printf("W:%d,H:%d,D:%d\n",depth.rows,depth.cols,depth.depth());
+				usleep(200000);
+				rgb = cv::imread(("/root/rgbd_mapping/RGBDMapping/rgb_data/" + std::to_string((iii % MAX)) + ".png").c_str(), cv::IMREAD_COLOR).clone();
+				depth = cv::imread( ("/root/rgbd_mapping/RGBDMapping/depth_data/" + std::to_string((iii % MAX)) + ".png").c_str(), cv::IMREAD_UNCHANGED).clone();
 				for ( int ww = 0; ww < 640; ww++){
 					for (int hh = 0; hh < 480; hh++){
 						depth.at<ushort>(hh,ww) = depth.at<ushort>(hh,ww) >> 3;
