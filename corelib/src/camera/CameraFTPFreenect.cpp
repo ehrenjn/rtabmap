@@ -186,14 +186,11 @@ std::string CameraFTPFreenect::getSerial() const
 
 SensorData CameraFTPFreenect::captureImage(CameraInfo * info)
 {
-	printf(">>captureImage\n");
 	SensorData data;
 	if( FreenectFTPDevice_) //ctx_ &&
 	{
-		printf(">>2\n");
 		if(FreenectFTPDevice_->isRunning())
 		{
-			printf(">>3\n");
 			cv::Mat depth,rgb;
 			if(TEST){
 				iii += 1;
