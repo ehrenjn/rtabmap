@@ -195,8 +195,8 @@ SensorData CameraFTPFreenect::captureImage(CameraInfo * info)
 			if(TEST){
 				iii += 1;
 				usleep(200000);
-				rgb = cv::imread(("/root/rgbd_mapping/RGBDMapping/rgb_data/" + std::to_string((iii % MAX)) + ".png").c_str(), cv::IMREAD_COLOR).clone();
-				depth = cv::imread( ("/root/rgbd_mapping/RGBDMapping/depth_data/" + std::to_string((iii % MAX)) + ".png").c_str(), cv::IMREAD_UNCHANGED).clone();
+				rgb = cv::imread(("/root/rgbd_mapping/RGBDMapping/recordings/rgb_data_480/" + std::to_string((iii % MAX)) + ".png").c_str(), cv::IMREAD_COLOR).clone();
+				depth = cv::imread( ("/root/rgbd_mapping/RGBDMapping/recordings/depth_data_480/" + std::to_string((iii % MAX)) + ".png").c_str(), cv::IMREAD_UNCHANGED).clone();
 				for ( int ww = 0; ww < 640; ww++){
 					for (int hh = 0; hh < 480; hh++){
 						depth.at<ushort>(hh,ww) = depth.at<ushort>(hh,ww) >> 3;
