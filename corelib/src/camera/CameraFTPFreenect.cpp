@@ -65,6 +65,7 @@ class FreenectFTPDevice : public UThread {
 
 	bool init()
 	{
+		printf("inint1");
 		rgbIrBuffer_ = cv::Mat(cv::Size(640,480), color_?CV_8UC3:CV_8UC1);
 		depthBuffer_ = cv::Mat(cv::Size(640,480), CV_16UC1);
 		float rgb_focal_length_sxga = 1050.0f;
@@ -74,6 +75,7 @@ class FreenectFTPDevice : public UThread {
 		depthFocal_ =  rgb_focal_length_sxga * scale;
 
 		UINFO("FreenectFTPDevice: Depth focal = %f", depthFocal_);
+		printf("init1.1\n");
 		return true;
 	}
 
@@ -150,12 +152,15 @@ CameraFTPFreenect::CameraFTPFreenect(int deviceId, Type type, float imageRate, c
 
 CameraFTPFreenect::~CameraFTPFreenect()
 {
+	printf("thing\n");
 	if(FreenectFTPDevice_)
 	{
+		printf("if thing\n");
 		FreenectFTPDevice_->join(true);
 		delete FreenectFTPDevice_;
 		FreenectFTPDevice_ = 0;
 	}
+	printf("done thing\n");
 }
 
 bool CameraFTPFreenect::init(const std::string & calibrationFolder, const std::string & cameraName)
