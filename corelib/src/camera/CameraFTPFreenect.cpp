@@ -34,6 +34,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <unistd.h>
 #include <thread>
 
+#include <rtabmap/core/camera/TCPCommunicator.h>
+#include <stdio.h>
+#include <string.h>
+
 
 const int TEST = true;
 int iii = 0;
@@ -50,7 +54,8 @@ class FreenectFTPDevice : public UThread {
 		registered_(registered),
 		ctx_(ctx),
 		device_(0),
-		depthFocal_(0.0f)
+		depthFocal_(0.0f),
+		communicator(FreenectFTPDevice::ip, FreenectFTPDevice::port)
 	{
 	}
 
@@ -83,13 +88,28 @@ class FreenectFTPDevice : public UThread {
 
 	void getData(cv::Mat & rgb, cv::Mat & depth)
 	{
+		Message rgbMessage = client.receiveMessage(receivedData);
+		std::memcpy(
+			rgb.data, 
+			rgbMessage.getStartOfData(), 
+			rgbMessage.getDataLength()
+		);
 
+		Message depthMessage = client.receiveMessage(receivedData);
+		std::memcpy(
+			depth.data, 
+			depthMessage.getStartOfData(), 
+			depthMessage.getDataLength()
+		);
 	}
 
 	void getAccelerometerValues(double & x, double & y, double & z)
 	{
 
 	}
+
+	constexpr uint8_t ip[] = {127, 0, 0, 1};
+	constexpr unsigned short port = 7787;
 
 private:
 	// Do not call directly even in child
@@ -130,6 +150,9 @@ private:
 	cv::Mat rgbIrLastFrame_;
 	float depthFocal_;
 	USemaphore dataReady_;
+
+	TCPClient communicator;
+	uint8_t messageArray[1000000];
 };
 
 //
@@ -203,6 +226,8 @@ SensorData CameraFTPFreenect::captureImage(CameraInfo * info)
 					}
 				}
 			} else {
+				rgb = cv::Mat(cv::Size(640,480), CV_8UC3);
+				depth = cv::Mat(cv::Size(640,480), CV_16UC1);
 				FreenectFTPDevice_->getData(rgb, depth);
 			}
 			
